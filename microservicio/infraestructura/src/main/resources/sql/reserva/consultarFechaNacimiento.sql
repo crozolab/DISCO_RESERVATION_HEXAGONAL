@@ -1,0 +1,1 @@
+select fecha_nacimiento from usuario where id = :idUsuario
