@@ -48,8 +48,9 @@ pipeline{
                 stage('Test- Backend'){
                     steps {
                         echo '------------>Test Backend<------------'
-                        dir("${PROJECT_PATH_BACK}"){
                         echo "${PROJECT_PATH_BACK}"
+                        dir("${PROJECT_PATH_BACK}"){
+
                             sh './gradlew --stacktrace test'
                         }
                     }
