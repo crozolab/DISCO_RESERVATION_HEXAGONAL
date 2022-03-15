@@ -71,20 +71,12 @@ pipeline{
             }
         }
         stage('Static Code Analysis') {
-            environment {
-                SONARSCANNER = "${tool name: 'SonarScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'}/bin/sonar-scanner"
-            }
             steps{
-                echo '------------>Análisis de código estático<------------'
-                withSonarQubeEnv('Sonar') {
-                    sh "${env.SONARSCANNER} -Dsonar.projectKey=.${BRANCH_NAME} -Dsonar.projectName=${BRANCH_NAME} -Dproject.settings=./sonar-project.properties"
-                }
-                echo '------------>Revision de Quality Gates<------------'
-                sleep 5
-                timeout(time: 1, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
-			}
+                    sonarqubeMasQualityGatesP(sonarKey:'co.com.ceiba.adn:[Discoteca-camilo.rozo]',
+                sonarName:'CeibaADN-Discoteca(camilo.rozo)',
+                sonarPathProperties:'./sonar-project.properties')
+            }
+
         }
 
         stage('Build'){
