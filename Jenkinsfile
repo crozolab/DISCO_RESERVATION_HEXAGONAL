@@ -74,7 +74,7 @@ pipeline{
             steps{
                     sonarqubeMasQualityGatesP(sonarKey:'co.com.ceiba.adn:[Discoteca-camilo.rozo]',
                 sonarName:'CeibaADN-Discoteca(camilo.rozo)',
-                sonarPathProperties:'./sonar-project.properties')
+                sonarPathProperties:'./sonar-project.properties'
             }
 
         }
