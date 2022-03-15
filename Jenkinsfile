@@ -34,28 +34,13 @@ pipeline{
      }*/
 
     stages{
-        stage('Checkout') {
-            steps {
-                echo '------------>Checkout desde Git Microservicio<------------'
-                //Esta opción se usa para el checkout sencillo de un microservicio
-                gitCheckout(
-                    urlProject:'https://github.com/CamiloRozo/Discoteca/blob/7dcd8831c80df87461f6548a4d6682a3c70a8d97/microservicio',
-                    branchProject: '${BRANCH_NAME}',
-                )
-
-                //Esta opción se usa cuando el comun está centralizado para varios microservicios
-                /*gitCheckoutWithComun(
-                    urlProject:'<url repositorio proyecto>',
-                    branchProject: '${BRANCH_NAME}',
-                    urlComun: '<url repositorio proyecto comun>'
-                )*/
-
-                dir("${PROJECT_PATH_BACK}"){
-                    sh 'chmod +x ./gradlew'
-                    sh './gradlew clean'
-                }
-            }
+      stage('Checkout') {
+          steps{
+            echo "------------>Checkout<------------"
+            checkout scm
+          }
         }
+
 
         stage('Compilacion y Test Unitarios'){
             // El "parallel" es si vamos a correr los test del frontend en paralelo con los test de backend, se configura en otro stage dentro de parallel
