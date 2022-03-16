@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class RepositorioUsuarioMysql implements RepositorioUsuario {
-    private final static String NOMBRE = "nombre";
+    private final String NOMBRE = "nombre";
 
     private final CustomNamedParameterJdbcTemplate customNamedParameterJdbcTemplate;
 
