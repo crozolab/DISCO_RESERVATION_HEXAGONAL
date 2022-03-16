@@ -1,14 +1,12 @@
 package com.ceiba.usuario.modelo.entidad;
 
 
-import lombok.Getter;
-import lombok.Setter;
+
 
 import java.time.LocalDate;
 
 import static com.ceiba.dominio.ValidadorArgumento.validarObligatorio;
-@Setter
-@Getter
+
 public class Reserva {
 
     private static final String SE_DEBE_INGRESAR_LA_FECHA_DE_RESERVA = "Se debe ingresar la fecha de la reserva";
@@ -27,13 +25,68 @@ public class Reserva {
         validarObligatorio(categoria, SE_DEBE_INGRESAR_LA_CATEGORIA_DE_LA_RESERVA);
         validarObligatorio(fechaReserva, SE_DEBE_INGRESAR_LA_FECHA_DE_RESERVA);
         validarObligatorio(nombre, SE_DEBE_INGRESAR_EL_NOMBRE_DE_USUARIO);
-        this.id = id;
-        this.nombre = nombre;
-        this.fechaReserva = fechaReserva;
-        this.categoria = categoria;
-        this.idUsuario = idUsuario;
-        this.precio = precio;
-        this.obsequio = obsequio;
+        setId(id);
+        setNombre(nombre);
+        setFechaReserva(fechaReserva);
+        setCategoria(categoria);
+        setIdUsuario(idUsuario);
+        setPrecio(precio);
+        setObsequio(obsequio);
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public LocalDate getFechaReserva() {
+        return fechaReserva;
+    }
+
+    public void setFechaReserva(LocalDate fechaReserva) {
+        this.fechaReserva = fechaReserva;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public float getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(float precio) {
+        this.precio = precio;
+    }
+
+    public boolean isObsequio() {
+        return obsequio;
+    }
+
+    public void setObsequio(boolean obsequio) {
+        this.obsequio = obsequio;
+    }
 }
