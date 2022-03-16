@@ -9,28 +9,30 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class RepositorioUsuarioMysql implements RepositorioUsuario {
+    private final static String NOMBRE = "nombre";
 
     private final CustomNamedParameterJdbcTemplate customNamedParameterJdbcTemplate;
 
-    @SqlStatement(namespace="usuario", value="crear")
+
+    @SqlStatement(namespace = "usuario", value = "crear")
     private static String sqlCrear;
 
-    @SqlStatement(namespace="usuario", value="actualizar")
+    @SqlStatement(namespace = "usuario", value = "actualizar")
     private static String sqlActualizar;
 
-    @SqlStatement(namespace="usuario", value="eliminar")
+    @SqlStatement(namespace = "usuario", value = "eliminar")
     private static String sqlEliminar;
 
-    @SqlStatement(namespace="usuario", value="existe")
+    @SqlStatement(namespace = "usuario", value = "existe")
     private static String sqlExiste;
 
-    @SqlStatement(namespace="usuario", value="existePorId")
+    @SqlStatement(namespace = "usuario", value = "existePorId")
     private static String sqlExistePorId;
 
-    @SqlStatement(namespace="usuario", value="existenCredenciales")
+    @SqlStatement(namespace = "usuario", value = "existenCredenciales")
     private static String sqlexistenCredenciales;
 
-    @SqlStatement(namespace="usuario", value="obtenerId")
+    @SqlStatement(namespace = "usuario", value = "obtenerId")
     private static String sqlobtenerId;
 
     public RepositorioUsuarioMysql(CustomNamedParameterJdbcTemplate customNamedParameterJdbcTemplate) {
@@ -53,9 +55,9 @@ public class RepositorioUsuarioMysql implements RepositorioUsuario {
     @Override
     public boolean existe(String nombre) {
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
-        paramSource.addValue("nombre", nombre);
+        paramSource.addValue(NOMBRE, nombre);
 
-        return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlExiste,paramSource, Boolean.class);
+        return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlExiste, paramSource, Boolean.class);
     }
 
     @Override
@@ -68,22 +70,22 @@ public class RepositorioUsuarioMysql implements RepositorioUsuario {
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
         paramSource.addValue("id", id);
 
-        return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlExistePorId,paramSource, Boolean.class);
+        return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlExistePorId, paramSource, Boolean.class);
     }
 
     @Override
     public boolean existenCredenciales(Usuario usuario) {
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
-        paramSource.addValue("nombre", usuario.getNombre());
+        paramSource.addValue(NOMBRE, usuario.getNombre());
         paramSource.addValue("clave", usuario.getClave());
-        return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlexistenCredenciales,paramSource, Boolean.class);
+        return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlexistenCredenciales, paramSource, Boolean.class);
     }
 
     @Override
-    public int obtenerId(Usuario usuario){
+    public int obtenerId(Usuario usuario) {
         MapSqlParameterSource paramSource = new MapSqlParameterSource();
-        paramSource.addValue("nombre", usuario.getNombre());
-        return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlobtenerId,paramSource, int.class);
+        paramSource.addValue(NOMBRE, usuario.getNombre());
+        return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlobtenerId, paramSource, int.class);
     }
 
 }

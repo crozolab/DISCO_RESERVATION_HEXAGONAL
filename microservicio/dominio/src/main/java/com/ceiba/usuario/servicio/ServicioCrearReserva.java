@@ -80,9 +80,9 @@ public class ServicioCrearReserva {
         String fechaReservaFormateada = formateoFechas(fechaReserva);
         LocalDateTime fechaNacimiento = this.repositorioReserva.consultarFechaNacimiento(reserva.getIdUsuario());
         String fechaNacimientoFormateada = formateoFechas(fechaNacimiento.toLocalDate());
-        boolean estaDeCumpleaños = fechaNacimientoFormateada.equals(fechaReservaFormateada);
-        reserva.setObsequio(!estaDeCumpleaños);
-        return estaDeCumpleaños;
+        boolean estaDeCumpleanos = fechaNacimientoFormateada.equals(fechaReservaFormateada);
+        reserva.setObsequio(!estaDeCumpleanos);
+        return estaDeCumpleanos;
     }
 
 

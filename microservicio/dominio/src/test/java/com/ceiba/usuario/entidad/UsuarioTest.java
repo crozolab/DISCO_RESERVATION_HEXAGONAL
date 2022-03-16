@@ -3,11 +3,14 @@ package com.ceiba.usuario.entidad;
 import com.ceiba.BasePrueba;
 import com.ceiba.dominio.excepcion.ExcepcionLongitudValor;
 import com.ceiba.dominio.excepcion.ExcepcionValorObligatorio;
+import com.ceiba.usuario.modelo.dto.DtoReserva;
+import com.ceiba.usuario.modelo.dto.DtoUsuario;
 import com.ceiba.usuario.modelo.entidad.Usuario;
 import com.ceiba.usuario.servicio.testdatabuilder.UsuarioTestDataBuilder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -121,6 +124,19 @@ public class UsuarioTest {
                     usuarioTestDataBuilder.buildLogin();
                 },
                 ExcepcionLongitudValor.class, "La clave debe tener una longitud mayor o igual a 4");
+    }
+
+
+    @Test
+    void DtoTest() {
+        LocalDate fecha = LocalDate.now();
+        LocalDateTime fecha2 = LocalDateTime.now();
+        DtoUsuario dtoUsuario = new DtoUsuario(1L, "camilo","1234",fecha,fecha2);
+        assertEquals(1L, dtoUsuario.getId());
+        assertEquals("camilo", dtoUsuario.getNombre());
+        assertEquals("1234", dtoUsuario.getClave());
+        assertEquals(dtoUsuario.getFechaNacimiento(),fecha);
+        assertEquals(fecha2, dtoUsuario.getFechaCreacion());
     }
 
 

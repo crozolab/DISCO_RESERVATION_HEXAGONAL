@@ -4,6 +4,7 @@ import com.ceiba.BasePrueba;
 import com.ceiba.dominio.excepcion.ExcepcionLongitudValor;
 import com.ceiba.dominio.excepcion.ExcepcionValorObligatorio;
 import com.ceiba.reserva.servicio.testdatabuilder.ReservaTestDataBuilder;
+import com.ceiba.usuario.modelo.dto.DtoReserva;
 import com.ceiba.usuario.modelo.entidad.Reserva;
 import com.ceiba.usuario.modelo.entidad.Usuario;
 import com.ceiba.usuario.servicio.testdatabuilder.UsuarioTestDataBuilder;
@@ -71,6 +72,21 @@ public class ReservaTest {
                 ExcepcionValorObligatorio.class, "Se debe ingresar la fecha de la reserva");
     }
 
+
+    @Test
+    void DtoTest() {
+       LocalDate fecha = LocalDate.now();
+        DtoReserva dtoReserva = new DtoReserva(1L, "camilo","general",fecha,1,80000,false);
+        dtoReserva.setCategoria("vip");
+        assertEquals(1L, dtoReserva.getId());
+        assertEquals("vip", dtoReserva.getCategoria());
+        assertEquals("camilo", dtoReserva.getNombre());
+        assertEquals(dtoReserva.getFechaReserva(),fecha);
+        assertEquals(1, dtoReserva.getIdUsuario());
+        assertEquals(80000, dtoReserva.getPrecio());
+        assertEquals(false, dtoReserva.isObsequio());
+
+    }
 
 
 }
