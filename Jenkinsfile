@@ -1,109 +1,85 @@
-@Library('ceiba-jenkins-library@master') _
-pipeline{
-	// any -> tomaria slave 5 u 8
-	// Para mobile se debe especificar el slave -> {label 'Slave_Mac'}
-	// Para proyectos de arus se debe tomar el slave 6 o 7 -> {label 'Slave6'} o {label 'Slave7'}
-    agent any
+@Library('ceiba-jenkins-library') _
+pipeline {
+  //Donde se va a ejecutar el Pipeline
+  agent {
+    label 'Slave_Induccion'
+  }
 
-    options {
-        buildDiscarder(logRotator(numToKeepStr: '5'))
-        disableConcurrentBuilds()
-        gitLabConnection('GitCeiba')
+  //Opciones específicas de Pipeline dentro del Pipeline
+  options {
+    	buildDiscarder(logRotator(numToKeepStr: '3'))
+ 	disableConcurrentBuilds()
+  }
+
+  //Una sección que define las herramientas “preinstaladas” en Jenkins
+  tools {
+    jdk 'JDK11_Centos' //Verisión preinstalada en la Configuración del Master
+  }
+/*	Versiones disponibles
+      JDK8_Mac
+      JDK6_Centos
+      JDK7_Centos
+      JDK8_Centos
+      JDK10_Centos
+      JDK11_Centos
+      JDK13_Centos
+      JDK14_Centos
+*/
+
+  //Aquí comienzan los “items” del Pipeline
+  stages{
+    stage('Checkout') {
+      steps{
+        echo "------------>Checkout<------------"
+		checkout scm
+      }
     }
 
-    environment {
-        PROJECT_PATH_BACK = 'microservicio'
+    stage('Compile & Unit Tests') {
+      steps{
+        echo "------------>Compile & Unit Tests<------------"
+		sh 'chmod +x ./microservicio/gradlew'
+		sh './microservicio/gradlew --b ./microservicio/build.gradle clean'
+		sh './microservicio/gradlew --b ./microservicio/build.gradle test'
+      }
+	}
+
+    stage('Static Code Analysis') {
+      steps{
+        echo '------------>Análisis de código estático<------------'
+		sonarqubeMasQualityGatesP(sonarKey:'co.com.ceiba.adn:pago.comparendos.julian.echeverri',
+        sonarName:'''"CeibaADN-PagoComparendos(julian.echeverri)"''',
+        sonarPathProperties:'./sonar-project.properties')
+      }
     }
 
-    triggers {
-        // @yearly, @annually, @monthly, @weekly, @daily, @midnight, and @hourly o definir un intervalo ejemplo H */4 * * 1-5
-        pollSCM('@daily') //define un intervalo regular en el que Jenkins debería verificar los cambios de fuente nuevos
+    stage('Build') {
+      steps {
+        echo "------------>Build<------------"
+		// Construir sin test
+		sh './microservicio/gradlew --b ./microservicio/build.gradle build -x test'
+      }
     }
+  }
 
-    tools {
-        jdk 'JDK11_Centos'
+  post {
+    always {
+      echo 'This will always run'
     }
-
-    // Parametros disponibles en jenkins
-     /*parameters{
-            string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-            text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
-            booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
-            choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
-            password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a passwor')
-     }*/
-
-    stages{
-      stage('Checkout') {
-          steps{
-            echo "------------>Checkout<------------"
-            checkout scm
-          }
-        }
-
-
-        stage('Compilacion y Test Unitarios'){
-            // El "parallel" es si vamos a correr los test del frontend en paralelo con los test de backend, se configura en otro stage dentro de parallel
-            parallel {
-                stage('Test- Backend'){
-                    steps {
-                        echo '------------>Test Backend<------------'
-                        dir("${PROJECT_PATH_BACK}"){
-                            sh './gradlew --stacktrace test'
-                        }
-                    }
-                    post{
-                        always {
-                            junit '**/build/test-results/test/*.xml' //Configuración de los reportes de JUnit
-                        }
-                    }
-                }
-                /*
-                stage('Test- Frontend'){
-                    steps {
-                        echo '------------>Test Frontend<------------'
-                        dir("${PROJECT_PATH_FRONT}"){
-                            // comando ejecucion test
-                        }
-                    }
-                }
-                */
-            }
-        }
-        stage('Static Code Analysis') {
-            steps{
-                    sonarqubeMasQualityGatesP(sonarKey:'co.com.ceiba.adn:discoteca-camilo.rozo',
-                sonarName:'CeibaADN-Discoteca(camilo.rozo)',
-                sonarPathProperties:'./sonar-project.properties'
-            }
-
-        }
-
-        stage('Build'){
-            parallel {
-                stage('construcción Backend'){
-                    steps{
-                        echo "------------>Compilación backend<------------"
-                        dir("${PROJECT_PATH_BACK}"){
-                            sh './gradlew build -x test'
-                        }
-                    }
-                }
-            }
-         }
+    success {
+      echo 'This will run only if successful'
+	  junit '**/test-results/test/*.xml'  //RUTA DE LOS ARCHIVOS .XML
     }
-
-    post {
-        failure {
-            mail(
-                to: '',
-                body:"Build failed in Jenkins: Project: ${env.JOB_NAME} Build /n Number: ${env.BUILD_NUMBER} URL de build: ${env.BUILD_NUMBER}/n/nPlease go to ${env.BUILD_URL} and verify the build",
-                subject: "ERROR CI: ${env.JOB_NAME}"
-            )
-            updateGitlabCommitStatus name: 'IC Jenkins', state: 'failed'
-        }
-        success {
-            updateGitlabCommitStatus name: 'IC Jenkins', state: 'success'
-        }
+    failure {
+      echo 'This will run only if failed'
+	  mail (to: 'camilo.rozo@ceiba.com.co',subject: "Failed Pipeline:${currentBuild.fullDisplayName}",body: "Something is wrong with ${env.BUILD_URL}")
     }
+    unstable {
+      echo 'This will run only if the run was marked as unstable'
+    }
+    changed {
+      echo 'This will run only if the state of the Pipeline has changed'
+      echo 'For example, if the Pipeline was previously failing but is now successful'
+    }
+  }
 }
