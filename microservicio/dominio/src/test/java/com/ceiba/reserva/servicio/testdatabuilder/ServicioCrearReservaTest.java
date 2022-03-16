@@ -47,6 +47,25 @@ public class ServicioCrearReservaTest {
     }
 
     @Test
+    @DisplayName("Deberia ser precio normal el dia sabado antes 3 pm")
+    void deberiaSerPrecioNormalCuandoSeValideSabado() {
+        // arrange
+        Clock fechaActual = Clock.fixed(Instant.parse("2022-03-19T08:15:30.00Z"), ZoneId.of("UTC"));
+        LocalDateTime fechaCumpleaños = LocalDateTime.parse("1992-11-07T09:57:45.106065100");
+        LocalDate fechaDelEvento = LocalDate.parse("2022-11-06");
+        Reserva reserva = new ReservaTestDataBuilder().conCategoria("vip").conFechaReserva(fechaDelEvento).build();
+        RepositorioReserva repositorioReserva = Mockito.mock(RepositorioReserva.class);
+        when(repositorioReserva.consultarFechaNacimiento(Mockito.anyInt())).thenReturn(fechaCumpleaños);
+        Mockito.when(repositorioReserva.crear(reserva)).thenReturn(2L);
+        ServicioCrearReserva servicioCrearReserva = new ServicioCrearReserva(fechaActual, repositorioReserva);
+        // act
+        Long idReserva = servicioCrearReserva.ejecutar(reserva);
+        // assert
+        assertEquals(2L,idReserva);
+        assertEquals(200000.0,reserva.getPrecio());
+    }
+
+    @Test
     @DisplayName("Deberia dar descuento y descuento adicional por cumpleaños")
     void deberiaDescuentoFull() {
         // arrange
