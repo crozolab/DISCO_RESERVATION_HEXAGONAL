@@ -2,7 +2,6 @@ package com.ceiba.usuario.consulta;
 
 import com.ceiba.usuario.comando.ComandoReserva;
 import com.ceiba.usuario.modelo.dto.DtoReserva;
-import com.ceiba.usuario.modelo.entidad.Reserva;
 import com.ceiba.usuario.puerto.dao.DaoReserva;
 import org.springframework.stereotype.Component;
 

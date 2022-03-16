@@ -21,7 +21,7 @@ pipeline{
     }
 
     tools {
-        jdk 'JDK13_Centos'
+        jdk 'JDK11_Centos'
     }
 
     // Parametros disponibles en jenkins
@@ -72,7 +72,7 @@ pipeline{
         }
         stage('Static Code Analysis') {
             steps{
-                    sonarqubeMasQualityGatesP(sonarKey:'co.com.ceiba.adn:[Discoteca-camilo.rozo]',
+                    sonarqubeMasQualityGatesP(sonarKey:'co.com.ceiba.adn:discoteca-camilo.rozo',
                 sonarName:'CeibaADN-Discoteca(camilo.rozo)',
                 sonarPathProperties:'./sonar-project.properties'
             }

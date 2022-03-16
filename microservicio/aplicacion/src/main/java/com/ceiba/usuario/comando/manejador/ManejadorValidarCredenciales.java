@@ -1,7 +1,6 @@
 package com.ceiba.usuario.comando.manejador;
 
 import com.ceiba.ComandoRespuesta;
-import com.ceiba.manejador.ManejadorComando;
 import com.ceiba.manejador.ManejadorComandoRespuesta;
 import com.ceiba.usuario.comando.ComandoUsuario;
 import com.ceiba.usuario.comando.fabrica.FabricaUsuario;
