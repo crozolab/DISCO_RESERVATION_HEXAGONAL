@@ -19,6 +19,10 @@ public class ServicioActualizarUsuario {
         this.repositorioUsuario.actualizar(usuario);
     }
 
+    /**
+     * valida la existencia de un usuario con el mismo nombre
+     * @param usuario
+     */
     private void validarExistenciaPrevia(Usuario usuario) {
         boolean existe = this.repositorioUsuario.existePorId(usuario.getId());
         if (!existe) {

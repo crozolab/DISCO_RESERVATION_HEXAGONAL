@@ -10,6 +10,10 @@ public class ServicioEliminarReserva {
         this.repositorioReserva = repositorioReserva;
     }
 
+    /**
+     * elimina el usuario por medio del id
+     * @param id
+     */
     public void ejecutar(Integer id) {
         this.repositorioReserva.eliminar(id);
     }

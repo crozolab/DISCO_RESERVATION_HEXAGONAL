@@ -33,12 +33,22 @@ public class ServicioCrearReserva {
         this.repositorioReserva = repositorioReserva;
     }
 
+    /**
+     * ejecuta el metodo con cada una de las validaciones para crear la reserva
+     * @param reserva
+     * @return
+     */
+
     public Long ejecutar(Reserva reserva) {
         validarCategoria(reserva);
         validarFecha(reserva);
         return this.repositorioReserva.crear(reserva);
     }
 
+    /**
+     * valida la categoria de la reserva entre general y vip
+     * @param reserva
+     */
 
     private void validarCategoria(Reserva reserva) {
         String categoria = reserva.getCategoria();
@@ -48,6 +58,10 @@ public class ServicioCrearReserva {
         }
     }
 
+    /**
+     * valida el dia y la hora para asignar precios
+     * @param reserva
+     */
     private void validarFecha(Reserva reserva) {
         LocalDateTime localDateTime = LocalDateTime.now(clock);
         String dia = localDateTime.getDayOfWeek().toString();
@@ -62,6 +76,13 @@ public class ServicioCrearReserva {
         }
     }
 
+
+    /**
+     * asigna el precio de la boleta segun las caracteristicas de la reserva
+     * @param reserva
+     * @param descuento
+     * @param cumpleanos
+     */
     private void asignarPrecio(Reserva reserva, boolean descuento, boolean cumpleanos) {
         String categoria = reserva.getCategoria();
         float precio = (categoria.equalsIgnoreCase(CATEGORIA_VIP)) ? PRECIO_VIP : PRECIO_GENERAL;
@@ -75,6 +96,11 @@ public class ServicioCrearReserva {
         reserva.setPrecio(precio);
     }
 
+    /**
+     * aplica el descuento de cumpleaños validando la fecha de cumpleaños y la fecha del evento
+     * @param reserva
+     * @return
+     */
     private boolean descuentoCumpleanos(Reserva reserva) {
         LocalDate fechaReserva = reserva.getFechaReserva();
         String fechaReservaFormateada = formateoFechas(fechaReserva);
@@ -85,7 +111,11 @@ public class ServicioCrearReserva {
         return estaDeCumpleanos;
     }
 
-
+    /**
+     * formatea la fecha para compararla en el descuento de cumpleanos
+     * @param fecha
+     * @return
+     */
     private String formateoFechas(LocalDate fecha) {
         return fecha.getDayOfMonth() + "/" + fecha.getMonth().toString();
     }

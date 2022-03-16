@@ -9,9 +9,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class RepositorioUsuarioMysql implements RepositorioUsuario {
-    private final String NOMBRE = "nombre";
+
 
     private final CustomNamedParameterJdbcTemplate customNamedParameterJdbcTemplate;
+
+    private static final String NOMBRE = "nombre";
 
 
     @SqlStatement(namespace = "usuario", value = "crear")
