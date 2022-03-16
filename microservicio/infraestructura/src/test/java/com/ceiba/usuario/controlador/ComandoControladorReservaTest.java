@@ -1,10 +1,9 @@
 package com.ceiba.usuario.controlador;
 
 import com.ceiba.ApplicationMock;
+import com.ceiba.reserva.controlador.ComandoControladorReserva;
 import com.ceiba.usuario.comando.ComandoReserva;
-import com.ceiba.usuario.comando.ComandoUsuario;
 import com.ceiba.usuario.servicio.testdatabuilder.ComandoReservaTestDataBuilder;
-import com.ceiba.usuario.servicio.testdatabuilder.ComandoUsuarioTestDataBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(ComandoControladorUsuario.class)
+@WebMvcTest(ComandoControladorReserva.class)
 @ContextConfiguration(classes = ApplicationMock.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class ComandoControladorReservaTest {

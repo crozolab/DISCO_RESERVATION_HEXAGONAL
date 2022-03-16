@@ -20,5 +20,6 @@ public class ComandoReserva {
     private LocalDate fechaReserva;
     private int idUsuario;
     private float precio;
+    private boolean obsequio;
 
 }

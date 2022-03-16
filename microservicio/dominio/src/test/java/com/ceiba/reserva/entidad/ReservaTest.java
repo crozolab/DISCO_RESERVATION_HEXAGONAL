@@ -23,7 +23,7 @@ public class ReservaTest {
         // arrange
         LocalDate fechaReserva = LocalDate.now();
         //act
-        Reserva reserva = new ReservaTestDataBuilder().conFechaReserva(fechaReserva).conId(1L).build();
+        Reserva reserva = new ReservaTestDataBuilder().conFechaReserva(fechaReserva).conId(1L).conObsequio(true).build();
         reserva.setFechaReserva(fechaReserva);
         //assert
         assertEquals(1, reserva.getId());
@@ -32,6 +32,7 @@ public class ReservaTest {
         assertEquals(1, reserva.getIdUsuario());
         assertEquals(80000, reserva.getPrecio());
         assertEquals(fechaReserva, reserva.getFechaReserva());
+        assertEquals(true, reserva.isObsequio());
     }
 
     @Test

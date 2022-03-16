@@ -16,6 +16,7 @@ create table reserva
     fecha_reserva datetime null,
     id_usuario int ,
     precio float (11) not null ,
+    obsequio bit not null ,
     primary key (id),
     foreign key (id_usuario) REFERENCES usuario (id)
 );

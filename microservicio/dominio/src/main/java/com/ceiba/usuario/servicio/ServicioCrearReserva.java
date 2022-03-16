@@ -80,11 +80,15 @@ public class ServicioCrearReserva {
         String fechaReservaFormateada = formateoFechas(fechaReserva);
         LocalDateTime fechaNacimiento = this.repositorioReserva.consultarFechaNacimiento(reserva.getIdUsuario());
         String fechaNacimientoFormateada = formateoFechas(fechaNacimiento.toLocalDate());
-        return fechaNacimientoFormateada.equals(fechaReservaFormateada);
+        boolean estaDeCumpleaños = fechaNacimientoFormateada.equals(fechaReservaFormateada);
+        reserva.setObsequio(!estaDeCumpleaños);
+        return estaDeCumpleaños;
     }
 
 
     private String formateoFechas(LocalDate fecha) {
         return fecha.getDayOfMonth() + "/" + fecha.getMonth().toString();
     }
+
+
 }

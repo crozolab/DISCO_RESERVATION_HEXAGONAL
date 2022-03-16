@@ -15,6 +15,7 @@ public class ComandoReservaTestDataBuilder {
     private LocalDate fechaReserva;
     private int idUsuario;
     private float precio;
+    private boolean obsequio;
 
     public ComandoReservaTestDataBuilder() {
 
@@ -24,11 +25,12 @@ public class ComandoReservaTestDataBuilder {
         fechaReserva = LocalDate.parse("2022-11-14");
         idUsuario = 2;
         precio = 80000;
+        obsequio = true;
 
     }
 
     public ComandoReserva build() {
-        return new ComandoReserva(id,nombre,categoria, fechaReserva, idUsuario, precio);
+        return new ComandoReserva(id,nombre,categoria, fechaReserva, idUsuario, precio, obsequio);
     }
 
 }

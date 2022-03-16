@@ -14,6 +14,7 @@ public class ReservaTestDataBuilder {
     private LocalDate fechaReserva;
     private int idUsuario;
     private float precio;
+    private boolean obsequio;
 
     public ReservaTestDataBuilder() {
         nombre = "1234";
@@ -21,6 +22,7 @@ public class ReservaTestDataBuilder {
         fechaReserva = LocalDate.now();
         idUsuario = 1;
         precio = 80000;
+        obsequio = true;
     }
 
     public ReservaTestDataBuilder conId(Long id) {
@@ -54,9 +56,15 @@ public class ReservaTestDataBuilder {
         return this;
     }
 
+    public ReservaTestDataBuilder conObsequio(boolean obsequio) {
+        this.obsequio = obsequio;
+        return this;
+    }
+
+
 
     public Reserva build() {
-        return new Reserva(id, nombre, categoria, fechaReserva, idUsuario, precio);
+        return new Reserva(id, nombre, categoria, fechaReserva, idUsuario, precio, obsequio);
     }
 
 

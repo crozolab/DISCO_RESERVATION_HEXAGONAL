@@ -17,4 +17,5 @@ public class DtoReserva {
     private LocalDate fechaReserva;
     private int idUsuario;
     private float precio;
+    private boolean obsequio;
 }

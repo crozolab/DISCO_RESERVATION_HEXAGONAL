@@ -15,7 +15,8 @@ public class FabricaReserva {
                 comandoReserva.getCategoria(),
                 comandoReserva.getFechaReserva(),
                 comandoReserva.getIdUsuario(),
-                comandoReserva.getPrecio()
+                comandoReserva.getPrecio(),
+                comandoReserva.isObsequio()
         );
     }
 

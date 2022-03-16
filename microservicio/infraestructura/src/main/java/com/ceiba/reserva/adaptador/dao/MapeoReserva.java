@@ -21,7 +21,8 @@ public class MapeoReserva implements RowMapper<DtoReserva>, MapperResult {
         LocalDate fechaReserva = extraerLocalDate(resultSet, "fecha_reserva");
         int idUsuario = resultSet.getInt("id_usuario");
         float precio = resultSet.getFloat("precio");
-        return new DtoReserva(id,nombre,categoria,fechaReserva, idUsuario, precio);
+        boolean obsequio = resultSet.getBoolean("obsequio");
+        return new DtoReserva(id,nombre,categoria,fechaReserva, idUsuario, precio, obsequio);
     }
 
 }
