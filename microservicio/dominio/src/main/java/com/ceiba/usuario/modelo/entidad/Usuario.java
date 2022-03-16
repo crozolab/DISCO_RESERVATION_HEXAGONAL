@@ -20,8 +20,8 @@ public class Usuario {
     private static final int LONGITUD_MINIMA_CLAVE = 4;
 
     private Long id;
-    private final String nombre;
-    private final String clave;
+    private String nombre;
+    private String clave;
     private LocalDateTime fechaCreacion;
     private LocalDate fechaNacimiento;
 
