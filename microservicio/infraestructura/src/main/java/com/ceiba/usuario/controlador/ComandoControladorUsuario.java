@@ -22,16 +22,15 @@ public class ComandoControladorUsuario {
     private final ManejadorCrearUsuario manejadorCrearUsuario;
 	private final ManejadorEliminarUsuario manejadorEliminarUsuario;
 	private final ManejadorActualizarUsuario manejadorActualizarUsuario;
-	private final ManejadorValidarCredenciales manejadorValidarCredenciales;
+
 
     @Autowired
     public ComandoControladorUsuario(ManejadorCrearUsuario manejadorCrearUsuario,
 									 ManejadorEliminarUsuario manejadorEliminarUsuario,
-									 ManejadorActualizarUsuario manejadorActualizarUsuario, ManejadorValidarCredenciales manejadorValidarCredenciales) {
+									 ManejadorActualizarUsuario manejadorActualizarUsuario) {
         this.manejadorCrearUsuario = manejadorCrearUsuario;
 		this.manejadorEliminarUsuario = manejadorEliminarUsuario;
 		this.manejadorActualizarUsuario = manejadorActualizarUsuario;
-		this.manejadorValidarCredenciales = manejadorValidarCredenciales;
     }
 
     @PostMapping
@@ -53,9 +52,4 @@ public class ComandoControladorUsuario {
 		manejadorActualizarUsuario.ejecutar(comandoUsuario);
 	}
 
-	@PutMapping
-	@ApiOperation("Validar password")
-	public  ComandoRespuesta<Integer> validar(@RequestBody ComandoUsuario comandoUsuario) {
-		return manejadorValidarCredenciales.ejecutar(comandoUsuario);
-	}
 }
