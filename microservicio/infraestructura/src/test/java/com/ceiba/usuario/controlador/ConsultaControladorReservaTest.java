@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -56,7 +57,7 @@ class ConsultaControladorReservaTest {
     @DisplayName("Deberia listar reservas para determinado usuario ")
     void deberiaListarReservasUsuario () throws Exception {
         ComandoReserva reserva = new ComandoReservaTestDataBuilder().build();
-        mocMvc.perform(get("/reserva/usuario")
+        mocMvc.perform(post("/reserva/usuario")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(reserva))
                 )

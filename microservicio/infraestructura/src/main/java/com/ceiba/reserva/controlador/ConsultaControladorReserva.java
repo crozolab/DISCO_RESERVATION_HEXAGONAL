@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/reserva")
 @Api(tags={"Controlador consulta reserva"})
 public class ConsultaControladorReserva {
@@ -31,7 +32,7 @@ public class ConsultaControladorReserva {
 
 
 
-    @GetMapping("/usuario")
+    @PostMapping ("/usuario")
     @ApiOperation("Mostrar las reservas del usuario")
     public List<DtoReserva> listarReservasUsuario(@RequestBody ComandoReserva comandoReserva){
         return this.manejadorListarReservas.ejecutar(comandoReserva);

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@CrossOrigin(value = "*")
 @RequestMapping("/reserva")
 @Api(tags = { "Controlador comando usuario"})
 public class ComandoControladorReserva {
@@ -35,6 +36,8 @@ public class ComandoControladorReserva {
     public ComandoRespuesta<Long> crear(@RequestBody ComandoReserva comandoReserva) {
         return manejadorCrearReserva.ejecutar(comandoReserva);
     }
+
+
 
 
 
