@@ -63,7 +63,7 @@ public class Reserva {
     }
 
     public void asignarPrecio(String categoria, boolean descuento, boolean cumpleanos) {
-        float precio = (categoria.equalsIgnoreCase(CATEGORIA_VIP)) ? PRECIO_VIP : PRECIO_GENERAL;
+         precio = (categoria.equalsIgnoreCase(CATEGORIA_VIP)) ? PRECIO_VIP : PRECIO_GENERAL;
         if (descuento && cumpleanos) {
             precio = (float) (precio * (1 - (DESCUENTO_DIAS + DESCUENTO_CUMPLEANOS)));
         } else if (descuento) {
