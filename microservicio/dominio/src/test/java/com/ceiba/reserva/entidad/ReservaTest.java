@@ -2,15 +2,20 @@ package com.ceiba.reserva.entidad;
 
 import com.ceiba.BasePrueba;
 import com.ceiba.dominio.excepcion.ExcepcionLongitudValor;
+import com.ceiba.dominio.excepcion.ExcepcionValorInvalido;
 import com.ceiba.dominio.excepcion.ExcepcionValorObligatorio;
 import com.ceiba.reserva.servicio.testdatabuilder.ReservaTestDataBuilder;
 import com.ceiba.usuario.modelo.dto.DtoReserva;
 import com.ceiba.usuario.modelo.entidad.Reserva;
 import com.ceiba.usuario.modelo.entidad.Usuario;
+import com.ceiba.usuario.puerto.repositorio.RepositorioReserva;
+import com.ceiba.usuario.servicio.ServicioCrearReserva;
 import com.ceiba.usuario.servicio.testdatabuilder.UsuarioTestDataBuilder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
+import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -86,6 +91,18 @@ public class ReservaTest {
         assertEquals(80000, dtoReserva.getPrecio());
         assertEquals(false, dtoReserva.isObsequio());
 
+    }
+
+    @Test
+    @DisplayName("Deberia lanzar una excepcion cuando se valide la categoria de la reserva")
+    void deberiaLanzarUnaExcepcionCuandoSeValideLaCategoriaDeLaReserva() {
+        //Arrange
+        ReservaTestDataBuilder reservaTestDataBuilder = new ReservaTestDataBuilder().conCategoria(null).conId(1L);
+        //act-assert
+        BasePrueba.assertThrows(() -> {
+                    reservaTestDataBuilder.build();
+                },
+                ExcepcionValorObligatorio.class, "Se debe ingresar la categoria de la reserva");
     }
 
 

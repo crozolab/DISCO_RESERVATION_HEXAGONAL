@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("/reserva")
 @Api(tags={"Controlador consulta reserva"})
 public class ConsultaControladorReserva {

@@ -19,17 +19,6 @@ public class ServicioCrearReservaTest {
 
 
 
-    @Test
-    @DisplayName("Deberia lanzar una excepcion cuando se valide la categoria de la reserva")
-    void deberiaLanzarUnaExcepcionCuandoSeValideLaCategoriaDeLaReserva() {
-        // arrange
-        Reserva reserva = new ReservaTestDataBuilder().conCategoria("platino").build();
-        RepositorioReserva repositorioReserva = Mockito.mock(RepositorioReserva.class);
-        ServicioCrearReserva servicioCrearReserva = new ServicioCrearReserva(Clock.systemDefaultZone(), repositorioReserva);
-        // act - assert
-        BasePrueba.assertThrows(() -> servicioCrearReserva.ejecutar(reserva), ExcepcionValorInvalido.class,"la categoria seleccionada no existe");
-    }
-
 
     @Test
     @DisplayName("Deberia lanzar una excepcion cuando la fecha se dia sabado pasadas 3 pm")
